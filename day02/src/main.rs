@@ -6,6 +6,7 @@ use itertools::Itertools;
 use std::iter::once;
 
 fn part1(v: &Vec<String>) {
+    //compute the frequency of each character
     let freq = |s: &String| {
         s.chars().fold(HashMap::new(), |mut h, c| {
             *h.entry(c).or_insert(0) += 1;
@@ -13,11 +14,13 @@ fn part1(v: &Vec<String>) {
         })
     };
 
+    //produces a pair of booleans telling if there are pairs or triples
     let has23 = |f: HashMap<_, _>| {
         f.values()
             .fold((false, false), |(a, b), &c| (a || c == 2, b || c == 3))
     };
 
+    //pairwise sum
     let sum2 = |(a, b), (c, d)| (a + c, b + d);
 
     let (r2, r3) = v
@@ -31,12 +34,14 @@ fn part1(v: &Vec<String>) {
 
 fn part2(v: &Vec<String>) {
 
+    //something similar to a rolling hash (it is even simpler, we just add things)
     let add = |h:&mut u32,c:char|{
         *h = h.wrapping_mul(17);
         *h = h.wrapping_add(c as u32);
         *h
     };
 
+    //produce a hash for each possible substring 0..i, in linear time
     let hashes = |it : &mut Iterator<Item=char>|{
         let mut h = 0;
         once(0).chain(it.map(|c|add(&mut h,c))).collect_vec()
@@ -46,9 +51,12 @@ fn part2(v: &Vec<String>) {
 
     let mut h = HashMap::new();
     for x in v {
+        //hashes from the beginning of the string to some position i
         let h1 = hashes(&mut x.chars());
+        //hashes from the end of the strings to some position j
         let h2 = hashes(&mut x.chars().rev());
         for i in 0..len {
+            //the new hash is composed by the hashes of the two strings 0..i and i+1..len, and i
             let hash = (h1[i],i,h2[len-i-1]);
             h.entry(hash).or_insert(vec![]).push((i,x));
         }
