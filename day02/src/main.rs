@@ -55,6 +55,7 @@ fn part2(v: &Vec<String>) {
         let h1 = hashes(&mut x.chars());
         //hashes from the end of the strings to some position j
         let h2 = hashes(&mut x.chars().rev());
+        //each step of this for requires constant time, since we precomputed the partial hashes
         for i in 0..len {
             //the new hash is composed by the hashes of the two strings 0..i and i+1..len, and i
             let hash = (h1[i],i,h2[len-i-1]);
