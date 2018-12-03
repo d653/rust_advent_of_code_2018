@@ -11,4 +11,4 @@ The given solution runs in `O( W * L)` expected time. The idea is:
 - for each word compute a hash of each possible new word obtained by removing a single character
 - use a hashmap to map these hashes to the position of the removed character and a pointer to the original string
 
-It is possible to produce each of these hashes in constant time, by using a rolling hash. 
+It is possible to produce each of these hashes in constant time, by computing cumulative hashes. 
