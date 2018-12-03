@@ -42,7 +42,7 @@ fn main() {
 
     let v = f.lines().map(|l|{
         let l = l.unwrap();
-        let (id,x,y,w,h): (usize,usize,usize,usize,usize);
+        let (id,x,y,w,h);
         scan!(l.bytes() => "#{} @ {},{}: {}x{}", id,x,y,w,h);
         Rect{id,x,y,w,h}
     }).collect();
