@@ -34,17 +34,21 @@ fn part1(v: &Vec<String>) {
 
 fn part2(v: &Vec<String>) {
 
-    //something similar to a rolling hash (it is even simpler, we just add things)
-    let add = |h:&mut u32,c:char|{
-        *h = h.wrapping_mul(17);
-        *h = h.wrapping_add(c as u32);
+    //a simple hash function
+    let hash = |x:u32|{
+        (x as u64 * 1664525u64 + 1013904223u64) as u32 
+    };
+
+    //produce a new hash as a function of the old hash and the current character
+    let update = |h:&mut u32,c:char|{
+        *h = hash(*h ^ c as u32);
         *h
     };
 
     //produce a hash for each possible substring 0..i, in linear time
     let hashes = |it : &mut Iterator<Item=char>|{
         let mut h = 0;
-        once(0).chain(it.map(|c|add(&mut h,c))).collect_vec()
+        once(0).chain(it.map(|c|update(&mut h,c))).collect_vec()
     };
 
     let len = v[0].len();
@@ -63,7 +67,7 @@ fn part2(v: &Vec<String>) {
         }
     }
 
-    for v in h.values() {
+    for v in h.values().filter(|v|v.len()!=1) {
         // if no collisions happened, v.len() is always 1, except for when we find the solution, in that case it will be 2
         // if there are collisions there is just slightly more work to do, the solution is still fine
         // there are no collisions with my AoC input
