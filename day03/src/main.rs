@@ -1,9 +1,6 @@
-use std::collections::HashMap;
 use std::fs::File;
 use std::io::BufRead;
 use std::io::BufReader;
-use itertools::Itertools;
-use std::iter::once;
 #[macro_use] extern crate text_io;
 
 struct Rect{
@@ -23,7 +20,7 @@ fn solve(v: &Vec<Rect>) {
             }
         }
     }
-    let mut s = 0;
+
     let r : usize = m.iter().map(|v|v.iter().filter(|&&x|x>1).count()).sum();
     println!("{}",r);
 
@@ -40,7 +37,7 @@ fn solve(v: &Vec<Rect>) {
 }
 
 fn main() {
-    let f = File::open("input").unwrap();
+    let f = File::open("input").unwrap(); 
     let f = BufReader::new(&f);
 
     let v = f.lines().map(|l|{
