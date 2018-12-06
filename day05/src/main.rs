@@ -20,7 +20,7 @@ fn part2(s: &str) {
         .map(|i| {
             part1(
                 &s.chars()
-                    .filter(|&c| c != (b'a' + i) as char && c != (b'A' + i) as char)
+                    .filter(|&c| (c as u8|32) != (b'a' + i))
                     .collect::<String>(),
             )
         })
