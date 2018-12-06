@@ -3,13 +3,13 @@ use std::fs::File;
 use std::io::BufRead;
 use std::io::BufReader;
 
-fn part1(v: &Vec<i32>) {
+fn part1(v: &[i32]) {
     let s: i32 = v.iter().sum();
 
     println!("{}", s);
 }
 
-fn part2(v: &Vec<i32>) {
+fn part2(v: &[i32]) {
     let mut freq = 0;
     let mut seen = HashSet::new();
     seen.insert(freq);
@@ -26,7 +26,7 @@ fn main() {
     let f = File::open("input").unwrap();
     let f = BufReader::new(&f);
 
-    let v = f.lines().map(|l| l.unwrap().parse().unwrap()).collect();
+    let v : Vec<_> = f.lines().map(|l| l.unwrap().parse().unwrap()).collect();
 
     part1(&v);
     part2(&v);

@@ -20,7 +20,7 @@ enum Evt {
     WAKE,
 }
 
-fn solve(v: &Vec<Event>) {
+fn solve(v: &[Event]) {
     let mut time = HashMap::new();
     let mut sums = HashMap::new();
     let mut guard = 0;
@@ -35,12 +35,12 @@ fn solve(v: &Vec<Event>) {
                 sleep = ev.m;
             }
             Evt::WAKE => {
-                let v = time.entry(guard).or_insert(vec![0; 60]);
+                let v = time.entry(guard).or_insert_with(||vec![0; 60]);
                 //keep track of the sum of the sleeping time of each guard
                 *sums.entry(guard).or_insert(0) += ev.m - sleep;
                 //and the number of times a guard is sleeping in a specific minute
-                for i in sleep..ev.m {
-                    v[i] += 1;
+                for it in &mut v[sleep..ev.m] {
+                    *it += 1;
                 }
             }
         }
@@ -75,7 +75,7 @@ fn main() {
     let f = BufReader::new(&f);
     let v = f.lines().map(|l| l.unwrap()).sorted();
 
-    let v = v
+    let v : Vec<_> = v
         .iter()
         .map(|l| {
             let (mo, d, h, m);

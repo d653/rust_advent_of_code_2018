@@ -5,7 +5,7 @@ use std::io::BufReader;
 use itertools::Itertools;
 use std::iter::once;
 
-fn part1(v: &Vec<String>) {
+fn part1(v: &[String]) {
     //compute the frequency of each character
     let freq = |s: &String| {
         s.chars().fold(HashMap::new(), |mut h, c| {
@@ -32,11 +32,11 @@ fn part1(v: &Vec<String>) {
     println!("{}", r2 * r3);
 }
 
-fn part2(v: &Vec<String>) {
+fn part2(v: &[String]) {
 
     //a simple hash function
     let hash = |x:u32|{
-        (x as u64 * 1664525u64 + 1013904223u64) as u32 
+        (u64::from(x) * 1_664_525u64 + 1_013_904_223u64) as u32 
     };
 
     //produce a new hash as a function of the old hash and the current character
@@ -63,7 +63,7 @@ fn part2(v: &Vec<String>) {
         for i in 0..len {
             //the new hash is composed by the hashes of the two strings 0..i and i+1..len, and i
             let hash = (h1[i],i,h2[len-i-1]);
-            h.entry(hash).or_insert(vec![]).push((i,x));
+            h.entry(hash).or_insert_with(||vec![]).push((i,x));
         }
     }
 
@@ -88,7 +88,7 @@ fn main() {
     let f = File::open("input").unwrap();
     let f = BufReader::new(&f);
 
-    let v = f.lines().map(|l| l.unwrap()).collect();
+    let v : Vec<_> = f.lines().map(|l| l.unwrap()).collect();
 
     part1(&v);
     part2(&v);

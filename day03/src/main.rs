@@ -11,12 +11,12 @@ struct Rect{
     h: usize
 }
 
-fn solve(v: &Vec<Rect>) {
+fn solve(v: &[Rect]) {
     let mut m = [[0;1000];1000];
     for r in v {
-        for i in r.y..r.y+r.h {
-            for j in r.x..r.x+r.w {
-                m[i][j] += 1;
+        for row in &mut m[r.y..r.y+r.h] {
+            for it in &mut row[r.x..r.x+r.w] {
+                *it += 1;
             }
         }
     }
@@ -25,9 +25,9 @@ fn solve(v: &Vec<Rect>) {
     println!("{}",r);
 
     'outer: for r in v {
-        for i in r.y..r.y+r.h {
-            for j in r.x..r.x+r.w {
-                if m[i][j] != 1 {
+        for row in &m[r.y..r.y+r.h] {
+            for it in &row[r.x..r.x+r.w] {
+                if *it != 1 {
                     continue 'outer;
                 }
             }
@@ -40,7 +40,7 @@ fn main() {
     let f = File::open("input").unwrap(); 
     let f = BufReader::new(&f);
 
-    let v = f.lines().map(|l|{
+    let v : Vec<_> = f.lines().map(|l|{
         let l = l.unwrap();
         let (id,x,y,w,h);
         scan!(l.bytes() => "#{} @ {},{}: {}x{}", id,x,y,w,h);
