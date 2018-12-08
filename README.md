@@ -5,4 +5,5 @@ Although the inputs given by Advent of Code are very small and any solution is f
 My favourites are (first is better): 
 - Day 2 (hashing ftw)
 - Day 7 (priority queues)
+- Day 8 (some recursion)
 - Day 5 (just nice)
