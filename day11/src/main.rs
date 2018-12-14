@@ -1,5 +1,3 @@
-use itertools::Itertools;
-
 const SZ: usize = 300;
 
 fn best(pfix: &Vec<Vec<i32>>, dim: usize) -> (i32, usize, usize, usize) {
