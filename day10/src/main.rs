@@ -3,7 +3,7 @@ use std::fs::File;
 use std::io::BufRead;
 use std::io::BufReader;
 
-fn solve(v: &Vec<((i32, i32), (i32, i32))>) {
+fn solve(v: &[((i32, i32), (i32, i32))]) {
     let vf: Vec<_> = v
         .iter()
         .map(|&((a, b), (c, d))| move |i: i32| (a + i * c, b + i * d))

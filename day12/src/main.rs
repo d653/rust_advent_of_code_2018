@@ -6,8 +6,7 @@ fn pad((offset, state): &(i64, Vec<bool>)) -> (i64, Vec<bool>) {
     let first = state
         .iter()
         .enumerate()
-        .filter(|(_, &b)| b)
-        .next()
+        .find(|(_, &b)| b)
         .unwrap()
         .0;
     let last = state

@@ -9,8 +9,8 @@ fn solve(p: usize, m: usize) {
     let mut cur = circle.cursor();
     cur.next();
 
-    defmac!(forward => if let None = cur.next() { cur.next(); } );
-    defmac!(backward => if let None = cur.prev() { cur.prev(); } );
+    defmac!(forward => if cur.next().is_none() { cur.next(); } );
+    defmac!(backward => if cur.prev().is_none() { cur.prev(); } );
 
     for i in 1..=m {
         if i % 23 != 0 {

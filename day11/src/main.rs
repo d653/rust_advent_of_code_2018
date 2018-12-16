@@ -1,6 +1,6 @@
 const SZ: usize = 300;
 
-fn best(pfix: &Vec<Vec<i32>>, dim: usize) -> (i32, usize, usize, usize) {
+fn best(pfix: &[Vec<i32>], dim: usize) -> (i32, usize, usize, usize) {
     let mut best = -(SZ as i32 * SZ as i32 * 10);
     let mut p = (0, 0);
     for i in dim..=SZ {
